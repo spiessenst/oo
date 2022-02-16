@@ -1,7 +1,8 @@
 <?php
-require __DIR__.'/functions.php';
+require __DIR__ . '/bootstrap.php';
 
-$ships = get_ships();
+$shipLoader = new ShipLoader();
+$ships = $shipLoader->getSships();
 
 
 $errorMessage = '';
