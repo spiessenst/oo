@@ -39,6 +39,7 @@ public function __construct($usedJediPowers,Ship $winningShip  = null ,Ship $los
         return $this->losingShip;
     }
 
+
 public function isThereAWinner(){
 
         return $this->getWinningShip() !== null;

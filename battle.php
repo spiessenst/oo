@@ -1,7 +1,9 @@
 <?php
 require __DIR__ . '/bootstrap.php';
 
-$shipLoader = new ShipLoader();
+$container = new Container($configuration);
+$shipLoader = $container->getShipLoader();
+
 $ships = $shipLoader->getSships();
 
 $ship1Id = isset($_POST['ship1_id']) ? $_POST['ship1_id'] : null;
@@ -29,7 +31,7 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
 
 
 
-$battleManager = new BattleManager();
+$battleManager = $container->getBattleManager();
 
 $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
 ?>
@@ -78,14 +80,14 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
                     <?php endif; ?>
                 </h3>
                 <p class="text-center">
-                    <?php if ($battleResult->isThereAWinner()): ?>
+                    <?php if (!$battleResult->isThereAWinner()): ?>
                         Both ships destroyed each other in an epic battle to the end.
                     <?php else: ?>
                         The <?php echo $battleResult->getWinningShip()->getName(); ?>
                         <?php if ($battleResult->wereJediPowersUsed()): ?>
                             used its Jedi Powers for a stunning victory!
                         <?php else: ?>
-                            overpowered and destroyed the <?php echo $battleResult->getLosingShip()->getName() ?>s
+                            overpowered and destroyed the <?php echo $battleResult->getLosingShip()->getName() ?>
                         <?php endif; ?>
                     <?php endif; ?>
                 </p>
